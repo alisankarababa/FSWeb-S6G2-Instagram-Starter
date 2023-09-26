@@ -23,8 +23,7 @@ const Yorumlar = props => {
 
     function leaveComment(e)
     {
-        gonderiyeYorumYap(user.username, inputContent);
-        console.log(user.username, inputContent);
+        gonderiyeYorumYap(gonderiId, user.username, inputContent);
         setInputContent("");
     }
 

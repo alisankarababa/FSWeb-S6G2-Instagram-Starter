@@ -18,7 +18,7 @@ const AramaCubugu = (props) => {
         <FontAwesomeIcon icon={faInstagram} />
       </div>
       <form className="search-form">
-        <input onChange={(e) =>props.searchBarContent(e.target.value)} type="text" placeholder="Arama" />
+        <input onChange={(e) =>props.updateSearchCriterion(e.target.value)} type="text" placeholder="Arama" />
       </form>
       <div className="social-wrapper">
         <div className="social">

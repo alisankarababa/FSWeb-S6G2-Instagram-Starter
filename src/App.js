@@ -13,6 +13,7 @@ import "./App.css";
 import Gonderiler from "./bilesenler/Gonderiler/Gonderiler";
 import AramaCubugu from "./bilesenler/AramaCubugu/AramaCubugu"
 import sahteVeri from "./sahte-veri"
+let nextCommentId = 37;
 
 const App = () => {
   // Gönderi nesneleri dizisini tutmak için "gonderiler" adlı bir state oluşturun, **sahteVeri'yi yükleyin**.
@@ -20,8 +21,7 @@ const App = () => {
   // Arama çubuğunun çalışması için , arama kriterini tutacak başka bir state'e ihtiyacımız olacak.
 
     const [gonderiler, setGonderiler] = useState(sahteVeri);
-
-    const [searchCriteria, setSearchCriteria] = useState(null); //????
+    const [searchCriterion, setSearchCriterion] = useState("");
 
   const gonderiyiBegen = (gonderiID) => {
     /*
@@ -37,41 +37,60 @@ const App = () => {
      */
 
         
-        setGonderiler( sahteVeri.map( ( gonderi ) => {
+        setGonderiler( gonderiler.map( ( gonderi ) => {
             
             if ( gonderi.id === gonderiID )
             {
                 ++gonderi.likes;
             }
             return gonderi;
-        }))     
+        }))
   };
 
-    let nextCommentId = 37;
-    function gonderiyeYorumYap(username, comment)
+    function gonderiyeYorumYap(gonderiID, username, comment)
     {
-        // setGonderiler( gonderiler.map( ( gonderi ) => {
-        //     if(gonderiID === gonderi.id)
-        //     {
-        //         gonderi.comments.push({
-        //             id: nextCommentId++,
-        //             username: username,
-        //             text: comment,
-        //         },)
-        //     }
-        //     return gonderi;
-        // }))
+        setGonderiler( gonderiler.map( ( gonderi ) => {
+            if(gonderiID === gonderi.id)
+            {
+                gonderi.comments.push({
+                    id: nextCommentId++,
+                    username: username,
+                    text: comment,
+                })
+            }
+            return gonderi;
+        }))
 
-        console.log(username, comment);
+        console.log(nextCommentId);
     }
 
+    function updateSearchCriterion(text)
+    {
+        setSearchCriterion(text);
+    }
 
     function searchBarContent(text)
     {
-        setGonderiler( sahteVeri.filter( ( gonderi ) => {
-            return gonderi.username.includes(text);
-        }))
+        if(text === "")
+        {
+            setGonderiler(sahteVeri);
+        }
+        else
+        {
+            setGonderiler( gonderiler.filter( ( gonderi ) => {
+                return gonderi.username.includes(text);
+            }))
+        }
     }
+
+    function searchFunc()
+    {
+        if("" !== searchCriterion)
+            return gonderiler.filter((gonderi) => gonderi.username.includes(searchCriterion));
+            
+        return gonderiler;
+    }
+
 
   return (
     <div className="App">
@@ -79,8 +98,8 @@ const App = () => {
       {/* AramaÇubuğu ve Gönderiler'i render etmesi için buraya ekleyin */}
       {/* Her bileşenin hangi proplara ihtiyaç duyduğunu kontrol edin, eğer ihtiyaç varsa ekleyin! */}
 
-      <AramaCubugu searchBarContent={searchBarContent}/>
-      <Gonderiler gonderiler={gonderiler} gonderiyeYorumYap={gonderiyeYorumYap} gonderiyiBegen={gonderiyiBegen}/>
+      <AramaCubugu  updateSearchCriterion={updateSearchCriterion}/>
+      <Gonderiler gonderiler={searchFunc()} gonderiyeYorumYap={gonderiyeYorumYap} gonderiyiBegen={gonderiyiBegen}/>
     </div>
   );
 };

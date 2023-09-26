@@ -24,7 +24,7 @@ const Gonderi = (props) => {
       {/* Yorumlar da proplara dikkat istiyor! */}
       
       <BegenBolumu begeniSayisi={gonderi.likes} gonderiyiBegen={() => gonderiyiBegen(gonderi.id)} />
-      <Yorumlar yorumlar={gonderi.comments} gonderiId={gonderi.id} gonderiyeYorumYap={() => gonderiyeYorumYap()}/>
+      <Yorumlar yorumlar={gonderi.comments} gonderiId={gonderi.id} gonderiyeYorumYap={gonderiyeYorumYap}/>
     </div>
   );
 };
