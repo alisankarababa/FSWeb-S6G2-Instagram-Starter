@@ -12,7 +12,6 @@
   width: 100%;
 }
 .comment-form input {
-  width: 90%;
   font-size: 14px;
   padding: 10px;
   border: none;
@@ -25,3 +24,20 @@
   color: black;
   font-weight: bold;
 }
+
+.comment-form #comment-input {
+    margin: 1em auto;
+    margin-left: 9px;
+    margin-right: 9px;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 1em;
+}
+
+.comment-form button {
+    font-size: 14px;
+    padding: 10px;
+    border: none;
+    border-top: 1px solid #efefef;
+    color: #999;
+  }
